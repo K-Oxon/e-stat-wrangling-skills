@@ -3,7 +3,7 @@ name: paper-excel-extractor
 description: Extracts a structured CSV from rasterized paper-style Excel / form pages. The caller (main agent) must have already rasterized the PDF to PNGs with rasterize.py. This subagent reads the images, plans an extraction layout, writes the CSV, and iterates via crop.py when confidence is low. Use when the caller has image paths and wants structured rows back.
 model: claude-opus-4-7
 effort: high
-tools: Read, Bash, Write, Grep
+tools: Read, Bash, Write
 ---
 
 # paper-excel-extractor
@@ -19,6 +19,7 @@ The caller will pass, as plain text in the prompt:
 - `user_context` (may be empty): what the form is, domain vocabulary, column hints
 - `schema_path` (optional): absolute path to a YAML schema (see `scripts/schema.py`)
 - `workdir` (optional): directory to use for crop outputs (default: sibling of the first image)
+- `rasterize_info` (optional but recommended): the relevant subset of rasterize.py's JSON (page_count, and for each target page: width_px, height_px, megapixels). Use this whenever you need PDF metadata; it removes the need to re-probe with `mdls`/`pdfinfo`.
 
 If any **required** field (`image_paths`, `output_csv_path`) is missing, reply with a single line starting with `MISSING_INPUT:` naming the missing field and stop.
 
@@ -106,3 +107,4 @@ End your turn with a plain-text report (not a tool call). Keep it under ~30 line
 - **Never skip the `level` column.** Even a flat list should have a `level` of 0.
 - **Cap tool usage**: ≤ 6 crops, ≤ 3 schema retries, ≤ ~20 tool calls total per invocation. If you hit a cap, return a partial result with a clear `low_confidence` list rather than looping.
 - **Do not write anywhere other than `output_csv_path` and `<workdir>/crop-*.png`.**
+- **Prefer the rasterize JSON the caller gave you over re-probing the PDF.** Page count and pixel dimensions are already in that JSON (or can be read from the PNG you already opened). Running `mdls` / `mdfind` / `pdfinfo` / `file` to re-derive the same facts just burns user permission prompts for no new information. Use them only when you genuinely need something not in the JSON.

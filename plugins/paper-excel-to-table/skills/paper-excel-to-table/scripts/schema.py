@@ -169,14 +169,19 @@ def validate(
         for idx, row in enumerate(reader, start=2):  # header is line 1
             total_rows += 1
             obj, soft_errs = _row_to_obj(row, schema)
-            for e in soft_errs:
-                failures.append(f"row {idx}: {e}")
-            try:
-                model.model_validate(obj)
-            except ValidationError as e:
-                for err in e.errors():
-                    loc = ".".join(str(p) for p in err["loc"])
-                    failures.append(f"row {idx}: {loc}: {err['msg']}")
+            if soft_errs:
+                for e in soft_errs:
+                    failures.append(f"row {idx}: {e}")
+                # A soft error means this row is already invalid in a way
+                # Pydantic would also flag (e.g. required-but-empty). Running
+                # model_validate here just duplicates the message, so skip it.
+            else:
+                try:
+                    model.model_validate(obj)
+                except ValidationError as e:
+                    for err in e.errors():
+                        loc = ".".join(str(p) for p in err["loc"])
+                        failures.append(f"row {idx}: {loc}: {err['msg']}")
             if schema.primary_key:
                 pk = tuple(row.get(k, "") for k in schema.primary_key)
                 if pk in seen_pk:

@@ -89,13 +89,28 @@ def run(
         [],
         "-o",
         "--out",
-        help="Output PNG path. Repeat once per --box/--rel-box in order.",
+        help="Output PNG path. Repeat once per --box or per --rel-box in order.",
     ),
 ) -> None:
-    """Crop the image. Each --box/--rel-box pairs with one -o in the order given."""
-    all_boxes: list[tuple[str, str]] = [("abs", b) for b in box] + [("rel", b) for b in rel_box]
-    if not all_boxes:
+    """Crop the image. Each --box/--rel-box pairs with one -o in the order given.
+
+    Absolute (--box) and relative (--rel-box) cannot be mixed in the same invocation
+    because Typer does not preserve relative order between different options; call
+    twice if you need both kinds.
+    """
+    if box and rel_box:
+        raise typer.BadParameter(
+            "cannot mix --box and --rel-box in the same invocation; "
+            "run twice (once per kind)"
+        )
+
+    if box:
+        all_boxes: list[tuple[str, str]] = [("abs", b) for b in box]
+    elif rel_box:
+        all_boxes = [("rel", b) for b in rel_box]
+    else:
         raise typer.BadParameter("provide at least one --box or --rel-box")
+
     if len(out) != len(all_boxes):
         raise typer.BadParameter(
             f"need one -o per crop; got {len(all_boxes)} boxes and {len(out)} outputs"

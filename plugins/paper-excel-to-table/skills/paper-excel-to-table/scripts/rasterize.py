@@ -43,6 +43,25 @@ def _ensure_env() -> None:
             "`swift` not found. Install Xcode Command Line Tools: `xcode-select --install`",
             code=2,
         )
+    # `which` can return a stub on a half-installed CLT (the binary exists but
+    # refuses to run). Actually invoking `swift --version` catches that.
+    try:
+        probe = subprocess.run(
+            ["swift", "--version"],
+            capture_output=True,
+            text=True,
+            check=False,
+            timeout=30,
+        )
+    except OSError as e:
+        _fail(f"failed to invoke `swift --version`: {e}", code=2)
+    if probe.returncode != 0:
+        msg = (probe.stderr or probe.stdout or "").strip() or "unknown"
+        _fail(
+            f"`swift --version` exited {probe.returncode}: {msg}. "
+            "Re-run `xcode-select --install` (or `sudo xcode-select --reset`) to fix.",
+            code=2,
+        )
     if not SWIFT_SCRIPT.exists():
         _fail(f"rasterize.swift missing at {SWIFT_SCRIPT}", code=2)
 

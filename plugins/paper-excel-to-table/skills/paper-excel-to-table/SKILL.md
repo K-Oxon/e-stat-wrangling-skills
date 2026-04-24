@@ -1,6 +1,6 @@
 ---
 name: paper-excel-to-table
-description: Use this when the user wants to turn a paper-style Excel workbook (already exported as PDF) into a structured CSV. Triggers on requests like "紙様式の帳票を CSV 化したい" / "複雑なセル結合の Excel を構造化したい" / "調査票レイアウト PDF から表を取り出したい" / "e-Stat の調査票レイアウトを機械判読可能にしたい". macOS only in MVP.
+description: Use this when the user wants to turn a paper-style form PDF (e.g., an Excel workbook exported as PDF, or a scanned/digital form with merged cells and presentation-heavy layout) into a structured CSV. Triggers on requests like "紙様式の帳票を CSV 化したい" / "複雑なセル結合の Excel を構造化したい" / "調査票レイアウト PDF から表を取り出したい" / "PDF の帳票を構造化したい" / "e-Stat の調査票レイアウトを機械判読可能にしたい". macOS only in MVP.
 ---
 
 # paper-excel-to-table
@@ -49,7 +49,8 @@ uv run --script <PLUGIN_ROOT>/skills/paper-excel-to-table/scripts/rasterize.py \
 
 - デフォルト `--dpi 300` (A4 縦 ~2481×3508 px)。**下げない**。高解像度を保ったまま後段の crop で自然に API 入力上限に収まる設計
 - 出力は `OUT_DIR/page-001.png`, `page-002.png`, ...
-- stdout に Backend Contract の JSON (ページごとの px サイズ等) が出る。次ステップで渡すパスはここから拾う
+- stdout に Backend Contract の JSON (`page_count`、ページごとの `width_px`/`height_px`/`megapixels` 等) が出る。次ステップで渡すパスはここから拾う
+- 一度 rasterize すれば PDF のページ数・寸法は JSON に全部入るので、**その後は** `mdls`/`mdfind`/`pdfinfo` 等で同じ情報を取り直さない (ユーザーに余計な permission プロンプトを出すだけ)。事前に「この PDF 何ページあるか先に見たい」など rasterize 前に知りたい用途で `mdls -name kMDItemNumberOfPages <pdf>` を使うのは OK
 
 ### 3. サブエージェント `paper-excel-to-table:paper-excel-extractor` で抽出
 
@@ -68,7 +69,17 @@ user_context: |
   - 既知の列: ...
 schema_path: <abs path to schema yaml, 省略可>
 workdir: <abs path for crop outputs, 省略可>
+rasterize_info: |
+  page_count: 10
+  target_pages:
+    - index: 1
+      width_px: 2481
+      height_px: 3508
+      megapixels: 8.70
+  # step 2 で受け取った JSON の "pages" 配列から、image_paths に対応する分を抜粋
 ```
+
+`rasterize_info` を入れておくと subagent が `mdls` / `pdfinfo` 等で同じ情報を取り直さずに済むので、ユーザーへの無駄な permission プロンプトが減る。
 
 subagent は内部で観察プラン策定 → CSV 書き出し → 低確度箇所の crop → 再観察 → (schema があれば) validate まで回し、main には短いレポートだけを返す。
 
@@ -129,11 +140,12 @@ uv run --script <...>/scripts/rasterize.py <pdf> <out_dir>
 
 ```
 uv run --script <...>/scripts/crop.py <image>
-  [--box x,y,w,h | --rel-box x,y,w,h] -o <out.png>
-  (--box/--rel-box と -o を同数ペアで繰り返して複数 crop 可)
+  (--box x,y,w,h | --rel-box x,y,w,h) -o <out.png>
+  ...同じ種類の --box/--rel-box と -o を同数ペアで繰り返して複数 crop 可
 ```
 
 - 原点は **左上**。`--box` は絶対 px、`--rel-box` は画像サイズに対する比率 0..1
+- **同一コマンド内で `--box` と `--rel-box` を混ぜられない** (Typer が複数種類のオプション間の登場順を保持しないため、ペアリングが壊れる)。両方必要なら 2 回に分けて呼ぶ
 - 出力 PNG は入力 PNG の DPI メタを引き継ぐ
 
 ### `scripts/schema.py`
@@ -156,3 +168,29 @@ uv run --script <...>/scripts/schema.py dump-json-schema --schema <yaml>
 - 必須: macOS + Xcode Command Line Tools (`swift` コマンド)
 - **不要**: `ANTHROPIC_API_KEY` (MVP の抽出は Claude-native; subagent が Claude Code セッション内で動く)
 - 将来 (Anthropic API 直叩き経路に昇格したとき): `ANTHROPIC_API_KEY`, `PAPER_EXCEL_MODEL` 等を追加 — `docs/dev/plugins/paper-excel-to-table.md` §9 参照
+
+### 初回 install 直後の注意
+
+Claude Code で本 plugin を install した直後、subagent (`paper-excel-extractor`) が認識されない場合があります。その時は以下を 1 回だけ実行:
+
+```
+/reload-plugins
+```
+
+### 推奨 allowlist (任意)
+
+ワークフロー中で呼ぶ Bash コマンドで permission プロンプトを抑えたいとき、ユーザーの `~/.claude/settings.json` に以下を追加すると快適:
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(uv run --script *)",
+      "Bash(swift --version)",
+      "Bash(xcode-select -p)"
+    ]
+  }
+}
+```
+
+plugin 側で allowlist を配布する仕組みは現状ありません (plugin 同梱 `settings.json` は `agent` / `subagentStatusLine` キーのみ対応)。

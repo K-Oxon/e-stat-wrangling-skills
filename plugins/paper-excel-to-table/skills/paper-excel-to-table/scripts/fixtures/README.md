@@ -1,13 +1,17 @@
 # fixtures
 
-この skill には大きな PDF サンプルを **同梱しません**。検証に使う PDF は repo 内の別の場所に置いてあります。
-
-- `docs/dev/ﾚｲｱｳﾄ_tk46_010_001.pdf`
-  - 出典: [地方公営企業決算状況調査 | 2025年度 | 調査票レイアウト（水道事業）](https://www.e-stat.go.jp/stat-search/files?page=1&layout=datalist&toukei=00200251&tstat=000001125335&cycle=7&year=20250&month=0&tclass1=000001125336&tclass2=000001125337)
-  - 10 ページ / A4 縦主体 + 一部横
-  - skill の e2e 検証 (SKILL.md の「抽出ワークフロー」) はこの PDF のページ 1 を対象に行う
+この skill には検証用 PDF を **同梱しません**。サンプル一式は repo root の
+[`samples/paper-excel-to-table/`](../../../../../../samples/paper-excel-to-table/) 配下に置いてあります。
 
 同梱しない理由:
 
-- 配布サイズを小さく保つ (skill は軽量 text + scripts に留める)
-- 統計表レイアウト PDF のライセンス取り扱いを skill 単体の配布条件から切り離す
+- `plugins/` 配下に置くと `/plugin install` で利用者の環境にまでコピーされてしまう (~1 MB の無駄)
+- サンプル原本のライセンス管理 (政府統計データの出典明記) を skill 配布の仕組みから切り離したい
+
+## 現在のサンプル
+
+| ID | 原本 | 概要 |
+|---|---|---|
+| [`tk46-010-001`](../../../../../../samples/paper-excel-to-table/tk46-010-001/) | 地方公営企業決算状況調査 (水道事業) 調査票レイアウト | 10 ページ / A4 縦横混在 |
+
+各サンプル配下の `context.md` に出典 URL・抽出時の user_context・抽出結果 (`extracted.csv`) の注意点が記載されています。
