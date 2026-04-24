@@ -11,6 +11,7 @@
   "license": "MIT",
   "keywords": ["excel", "csv", "table", "vision", "statistics"],
   "skills": "./skills/",
+  "agents": "./agents/",
   "interface": {
     "displayName": "Paper Excel To Table",
     "shortDescription": "Convert paper-style Excel forms into structured CSV outputs",

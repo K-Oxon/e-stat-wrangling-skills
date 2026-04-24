@@ -1,0 +1,31 @@
+name: suido_gyomu_nenpo
+description: |
+  地方公営企業決算状況調査 (水道事業) レイアウト用のサンプルスキーマ。
+  ページ 1 の冒頭ブロック (事業体情報・水源構成など) を最小で受ける形。
+  値は "-" や注記を含むので value は str。
+primary_key: [item_code]
+columns:
+  - name: level
+    type: int
+    required: true
+    description: インデントで表現された階層深さ (0 始まり)。
+  - name: item_code
+    type: str
+    required: true
+    description: 項目番号 / コード。帳票によっては行の右端にある点に注意。
+  - name: item_label
+    type: str
+    required: true
+    description: 項目名 (見出し文言)。
+  - name: unit
+    type: str
+    required: false
+    description: 単位 (千円 / m3 / 人 など)。
+  - name: value
+    type: str
+    required: false
+    description: 値。数値・"-"・"※"・"?" (読み取り不能) などが混在。
+  - name: notes
+    type: str
+    required: false
+    description: 脚注マーカーや補足 (※, 注1) などを分離して格納。
