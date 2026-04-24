@@ -1,0 +1,19 @@
+{
+  "globs": [
+    "README.md",
+    "README.en.md",
+    "CHANGELOG.md",
+    "docs/**/*.md",
+    "plugins/**/*.md"
+  ],
+  "gitignore": true,
+  "ignores": [
+    "node_modules",
+    "tmp"
+  ],
+  "config": {
+    "default": true,
+    "MD013": false,
+    "MD040": false
+  }
+}

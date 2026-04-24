@@ -105,6 +105,6 @@ End your turn with a plain-text report (not a tool call). Keep it under ~30 line
 - **Never strip footnote markers silently.** Either keep them in a dedicated column or call them out in `notes_for_user`.
 - **Never assume left→right for identifiers.** Explicitly state the ID column's side in the report.
 - **Never skip the `level` column.** Even a flat list should have a `level` of 0.
-- **Cap tool usage**: ≤ 6 crops, ≤ 3 schema retries, ≤ ~20 tool calls total per invocation. If you hit a cap, return a partial result with a clear `low_confidence` list rather than looping.
+- Cap tool usage: ≤ 6 crops, ≤ 3 schema retries, ≤ ~20 tool calls total per invocation. If you hit a cap, return a partial result with a clear `low_confidence` list rather than looping.
 - **Do not write anywhere other than `output_csv_path` and `<workdir>/crop-*.png`.**
 - **Prefer the rasterize JSON the caller gave you over re-probing the PDF.** Page count and pixel dimensions are already in that JSON (or can be read from the PNG you already opened). Running `mdls` / `mdfind` / `pdfinfo` / `file` to re-derive the same facts just burns user permission prompts for no new information. Use them only when you genuinely need something not in the JSON.

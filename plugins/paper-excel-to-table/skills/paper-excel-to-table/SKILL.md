@@ -54,9 +54,9 @@ uv run --script <PLUGIN_ROOT>/skills/paper-excel-to-table/scripts/rasterize.py \
 
 ### 3. サブエージェント `paper-excel-to-table:paper-excel-extractor` で抽出
 
-**重要**: 画像 Read や抽出ロジックは subagent 側で行う。main セッションでは画像を直接 Read しない — コンテキスト汚染を避けるため。
+重要: 画像 Read や抽出ロジックは subagent 側で行う。main セッションでは画像を直接 Read しない — コンテキスト汚染を避けるため。
 
-`Agent` tool で `subagent_type=paper-excel-to-table:paper-excel-extractor` を起動し、prompt に以下を **プレーンテキストで** 詰める:
+`Agent` tool で `subagent_type=paper-excel-to-table:paper-excel-extractor` を起動し、prompt に以下を **プレーンテキストで** 詰める。
 
 ```
 image_paths:
@@ -85,11 +85,11 @@ subagent は内部で観察プラン策定 → CSV 書き出し → 低確度箇
 
 ### 4. subagent の応答を処理
 
-返答パターン別に対応:
+返答パターン別に対応します。
 
-- **通常応答** (`csv_path`, `rows`, `id_column`, `hierarchy_signal`, `crops_used`, `low_confidence`, `schema_validation`, `notes_for_user`): ユーザーに要約を提示。`low_confidence` に項目があればその旨を明示
-- **`INSUFFICIENT_CONTEXT:` から始まる応答**: 続く質問をユーザーに投げ、回答を受けて手順 3 をやり直す
-- **`MISSING_INPUT:` から始まる応答**: 自分の prompt 組み立てが不完全。不足を補って再実行
+- 通常応答 (`csv_path`, `rows`, `id_column`, `hierarchy_signal`, `crops_used`, `low_confidence`, `schema_validation`, `notes_for_user`): ユーザーに要約を提示。`low_confidence` に項目があればその旨を明示
+- `INSUFFICIENT_CONTEXT:` から始まる応答: 続く質問をユーザーに投げ、回答を受けて手順 3 をやり直す
+- `MISSING_INPUT:` から始まる応答: 自分の prompt 組み立てが不完全。不足を補って再実行
 
 ### 5. (schema 未指定のときの提案)
 
@@ -166,12 +166,12 @@ uv run --script <...>/scripts/schema.py dump-json-schema --schema <yaml>
 ## 環境
 
 - 必須: macOS + Xcode Command Line Tools (`swift` コマンド)
-- **不要**: `ANTHROPIC_API_KEY` (MVP の抽出は Claude-native; subagent が Claude Code セッション内で動く)
+- 不要: `ANTHROPIC_API_KEY` (MVP の抽出は Claude-native; subagent が Claude Code セッション内で動く)
 - 将来 (Anthropic API 直叩き経路に昇格したとき): `ANTHROPIC_API_KEY`, `PAPER_EXCEL_MODEL` 等を追加 — `docs/dev/plugins/paper-excel-to-table.md` §9 参照
 
 ### 初回 install 直後の注意
 
-Claude Code で本 plugin を install した直後、subagent (`paper-excel-extractor`) が認識されない場合があります。その時は以下を 1 回だけ実行:
+Claude Code で本 plugin を install した直後、subagent (`paper-excel-extractor`) が認識されない場合があります。その時は以下を 1 回だけ実行します。
 
 ```
 /reload-plugins

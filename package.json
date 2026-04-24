@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "scripts": {
+    "lint:md": "markdownlint-cli2 && textlint README.md README.en.md CHANGELOG.md \"docs/**/*.md\" \"plugins/**/*.md\"",
+    "lint:md:style": "markdownlint-cli2",
+    "lint:md:text": "textlint",
+    "hooks:install": "git config core.hooksPath .githooks",
+    "hooks:uninstall": "git config --unset core.hooksPath || true"
+  },
+  "devDependencies": {
+    "@textlint-ja/textlint-rule-preset-ai-writing": "1.6.3",
+    "markdownlint-cli2": "0.22.1",
+    "textlint": "15.5.4"
+  }
+}

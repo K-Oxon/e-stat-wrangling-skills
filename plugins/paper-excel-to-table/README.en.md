@@ -33,7 +33,7 @@ Because extraction runs in a subagent, **no image bytes or intermediate tables e
 ## Prerequisites
 
 | Item | Requirement |
-|---|---|
+| --- | --- |
 | OS | macOS (PDFKit is required for rasterization) |
 | Xcode Command Line Tools | Installed (`xcode-select --install`); `swift` must be on PATH |
 | Claude Code | 0.124.0 or later |
@@ -181,7 +181,7 @@ Failures are listed on stderr line-by-line (row index, column, reason).
 ## Pitfalls worth knowing up front
 
 | Concern | Mitigation |
-|---|---|
+| --- | --- |
 | Indentation-encoded hierarchy disappears in CSV | The subagent always emits a `level` integer column (0-based). Schemas should require it. |
 | ID column may be on the **right** edge | Do not assume left-to-right. The subagent reports `id_column` with the side it chose. |
 | Visually merged cells ≠ logically merged cells | Borders alone aren't enough. Pass the form's semantics via `user_context`. |
