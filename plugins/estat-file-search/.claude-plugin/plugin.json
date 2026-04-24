@@ -1,0 +1,30 @@
+{
+  "name": "estat-file-search",
+  "version": "0.1.0",
+  "description": "Search and download files from e-Stat using documentation-first recipes.",
+  "author": {
+    "name": "K-Oxon",
+    "url": "https://github.com/K-Oxon/e-stat-wrangling-skills"
+  },
+  "homepage": "https://github.com/K-Oxon/e-stat-wrangling-skills",
+  "repository": "https://github.com/K-Oxon/e-stat-wrangling-skills",
+  "license": "MIT",
+  "keywords": ["estat", "search", "download", "statistics"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "e-Stat File Search",
+    "shortDescription": "Find downloadable e-Stat files",
+    "longDescription": "Guide file-oriented e-Stat searches through reference documents and repeatable curl/xh recipes.",
+    "developerName": "K-Oxon",
+    "category": "Coding",
+    "capabilities": ["Interactive", "Read"],
+    "websiteURL": "https://github.com/K-Oxon/e-stat-wrangling-skills",
+    "privacyPolicyURL": "https://github.com/K-Oxon/e-stat-wrangling-skills",
+    "termsOfServiceURL": "https://github.com/K-Oxon/e-stat-wrangling-skills",
+    "defaultPrompt": [
+      "Search e-Stat for downloadable spreadsheet, CSV, or PDF files."
+    ],
+    "brandColor": "#2E8B57",
+    "screenshots": []
+  }
+}

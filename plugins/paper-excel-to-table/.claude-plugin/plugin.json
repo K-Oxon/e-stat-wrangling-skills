@@ -1,0 +1,30 @@
+{
+  "name": "paper-excel-to-table",
+  "version": "0.1.0",
+  "description": "Plan structured extraction from paper-style Excel forms using documentation-first workflow notes.",
+  "author": {
+    "name": "K-Oxon",
+    "url": "https://github.com/K-Oxon/e-stat-wrangling-skills"
+  },
+  "homepage": "https://github.com/K-Oxon/e-stat-wrangling-skills",
+  "repository": "https://github.com/K-Oxon/e-stat-wrangling-skills",
+  "license": "MIT",
+  "keywords": ["excel", "csv", "table", "vision", "statistics"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Paper Excel To Table",
+    "shortDescription": "Convert paper-style Excel forms into structured CSV outputs",
+    "longDescription": "Guide analysis of presentation-heavy spreadsheet forms and defer implementation details until the extraction workflow is stable.",
+    "developerName": "K-Oxon",
+    "category": "Coding",
+    "capabilities": ["Interactive", "Write"],
+    "websiteURL": "https://github.com/K-Oxon/e-stat-wrangling-skills",
+    "privacyPolicyURL": "https://github.com/K-Oxon/e-stat-wrangling-skills",
+    "termsOfServiceURL": "https://github.com/K-Oxon/e-stat-wrangling-skills",
+    "defaultPrompt": [
+      "Convert a paper-style Excel workbook into a structured CSV."
+    ],
+    "brandColor": "#1F6F8B",
+    "screenshots": []
+  }
+}
