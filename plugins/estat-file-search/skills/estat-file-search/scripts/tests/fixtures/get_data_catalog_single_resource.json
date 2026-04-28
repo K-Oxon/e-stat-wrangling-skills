@@ -1,0 +1,62 @@
+{
+  "GET_DATA_CATALOG": {
+    "RESULT": {
+      "STATUS": 0,
+      "ERROR_MSG": "正常に終了しました。",
+      "DATE": "2026-04-25T10:00:00.000+09:00"
+    },
+    "PARAMETER": {
+      "LANG": "J",
+      "STATS_CODE": "00450041",
+      "SEARCH_WORD": "保育士",
+      "DATA_TYPE": "XLS",
+      "START_POSITION": 1,
+      "LIMIT": 1
+    },
+    "DATA_CATALOG_LIST_INF": {
+      "NUMBER": 1,
+      "RESULT_INF": {
+        "FROM_NUMBER": 1,
+        "TO_NUMBER": 1
+      },
+      "DATA_CATALOG_INF": {
+        "@id": "000001255613",
+        "DATASET": {
+          "STAT_NAME": {
+            "@code": "00450041",
+            "$": "社会福祉施設等調査"
+          },
+          "ORGANIZATION": {
+            "@code": "00450",
+            "$": "厚生労働省"
+          },
+          "TITLE": {
+            "NAME": "社会福祉施設等調査_施設票_年次_2023年",
+            "TABULATION_CATEGORY": "社会福祉施設等調査",
+            "CYCLE": "年次",
+            "SURVEY_DATE": 2023,
+            "COLLECT_AREA": "全国"
+          },
+          "RELEASE_DATE": "2024-12-01",
+          "LAST_MODIFIED_DATE": "2024-12-15",
+          "LANDING_PAGE": "https://www.e-stat.go.jp/stat-search/files?layout=datalist&toukei=00450041"
+        },
+        "RESOURCES": {
+          "RESOURCE": {
+            "@id": "000008508466",
+            "TITLE": {
+              "NAME": "施設票 保育所",
+              "TABLE_NO": 1,
+              "TABLE_NAME": "保育所"
+            },
+            "URL": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000008508466&fileKind=0",
+            "FORMAT": "XLS",
+            "RELEASE_DATE": "2024-12-01",
+            "LAST_MODIFIED_DATE": "2024-12-15",
+            "LANGUAGE": "J"
+          }
+        }
+      }
+    }
+  }
+}

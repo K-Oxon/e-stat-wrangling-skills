@@ -1,9 +1,28 @@
 # Download File
 
-After identifying the final URL from the saved catalog response:
+After identifying the final URL from the saved catalog response, first do a dry run:
 
 ```bash
-curl -fL "https://example.invalid/path/to/file.xlsx" -o ./downloaded-file.xlsx
+uv run --script plugins/estat-file-search/skills/estat-file-search/scripts/download.py \
+  --url "https://www.e-stat.go.jp/stat-search/file-download?statInfId=...&fileKind=0" \
+  --resource-id 000000000000 \
+  --format XLS \
+  --dest ./data \
+  --dry-run
 ```
 
-Replace the URL only after checking the catalog response structure.
+Then download:
+
+```bash
+uv run --script plugins/estat-file-search/skills/estat-file-search/scripts/download.py \
+  --url "https://www.e-stat.go.jp/stat-search/file-download?statInfId=...&fileKind=0" \
+  --resource-id 000000000000 \
+  --format XLS \
+  --dest ./data
+```
+
+Filename policy:
+
+- Prefer server `Content-Disposition`.
+- Fallback to `resource_id` plus inferred extension.
+- Write a manifest next to the file.

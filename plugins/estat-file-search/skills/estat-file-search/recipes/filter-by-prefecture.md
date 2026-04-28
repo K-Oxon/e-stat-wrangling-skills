@@ -1,14 +1,21 @@
 # Filter By Prefecture
 
-Start from the keyword recipe, then add the region-related query parameter once the concrete search
-shape is fixed.
+`collectArea` is not reliable enough to be the first lever. Prefer anchoring the search with
+`statsCode`, then use keyword variants and inspect candidate titles/landing pages.
 
 ```bash
-curl -sG "https://api.e-stat.go.jp/rest/3.0/app/json/getDataCatalog" \
-  --data-urlencode "appId=$ESTAT_APP_ID" \
-  --data-urlencode "searchWord=人口" \
-  --data-urlencode "limit=20" \
-  -o /tmp/estat-file-search-prefecture.json
+uv run --script plugins/estat-file-search/skills/estat-file-search/scripts/search.py \
+  --stats-code 00200521 \
+  --keyword "東京 AND 人口" \
+  --limit 100 \
+  --raw-output /tmp/estat-prefecture-raw.json \
+  --candidates-output /tmp/estat-prefecture-candidates.csv
 ```
 
-This file is intentionally a placeholder for the later, more detailed parameter design.
+If the response is too broad, try a short keyword set instead of one overloaded query:
+
+```bash
+uv run --script plugins/estat-file-search/skills/estat-file-search/scripts/keyword_hints.py \
+  人口 東京 \
+  --survey-name 国勢調査
+```

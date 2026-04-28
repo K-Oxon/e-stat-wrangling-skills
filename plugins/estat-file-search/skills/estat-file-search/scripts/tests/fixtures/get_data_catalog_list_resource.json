@@ -1,0 +1,64 @@
+{
+  "GET_DATA_CATALOG": {
+    "RESULT": {
+      "STATUS": 0,
+      "ERROR_MSG": "正常に終了しました。",
+      "DATE": "2026-04-25T10:00:00.000+09:00"
+    },
+    "DATA_CATALOG_LIST_INF": {
+      "NUMBER": 2,
+      "RESULT_INF": {
+        "FROM_NUMBER": 1,
+        "TO_NUMBER": 2,
+        "NEXT_KEY": 3
+      },
+      "DATA_CATALOG_INF": [
+        {
+          "@id": "dataset-1",
+          "DATASET": {
+            "STAT_NAME": {
+              "@code": "00100001",
+              "$": "テスト調査"
+            },
+            "ORGANIZATION": {
+              "@code": "00100",
+              "$": "テスト府"
+            },
+            "TITLE": {
+              "NAME": "テスト調査_統計表_2024年",
+              "TABULATION_CATEGORY": "統計表",
+              "SURVEY_DATE": "2024"
+            },
+            "LANDING_PAGE": "https://example.test/dataset-1"
+          },
+          "RESOURCES": {
+            "RESOURCE": [
+              {
+                "@id": "resource-1",
+                "TITLE": {
+                  "NAME": "第1表",
+                  "TABLE_NO": "1",
+                  "TABLE_NAME": "人口"
+                },
+                "URL": "https://example.test/resource-1.csv",
+                "FORMAT": "CSV",
+                "LANGUAGE": "J"
+              },
+              {
+                "@id": "resource-2",
+                "TITLE": {
+                  "NAME": "第2表",
+                  "TABLE_NO": "2",
+                  "TABLE_NAME": "世帯"
+                },
+                "URL": "https://example.test/resource-2.pdf",
+                "FORMAT": "PDF",
+                "LANGUAGE": "J"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
