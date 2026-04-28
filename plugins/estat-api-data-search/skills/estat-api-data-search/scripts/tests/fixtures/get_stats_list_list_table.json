@@ -1,0 +1,96 @@
+{
+  "GET_STATS_LIST": {
+    "RESULT": {
+      "STATUS": 0,
+      "ERROR_MSG": "正常に終了しました。",
+      "DATE": "2026-04-25T13:41:58.516+09:00"
+    },
+    "DATALIST_INF": {
+      "NUMBER": 2,
+      "RESULT_INF": {
+        "FROM_NUMBER": 1,
+        "TO_NUMBER": 2,
+        "NEXT_KEY": 3
+      },
+      "TABLE_INF": [
+        {
+          "@id": "0000010101",
+          "STAT_NAME": {
+            "@code": "00200502",
+            "$": "社会・人口統計体系"
+          },
+          "GOV_ORG": {
+            "@code": "00200",
+            "$": "総務省"
+          },
+          "STATISTICS_NAME": "都道府県データ 基礎データ",
+          "TITLE": {
+            "@no": "0000010101",
+            "$": "Ａ　人口・世帯"
+          },
+          "CYCLE": "年度次",
+          "SURVEY_DATE": 0,
+          "OPEN_DATE": "2026-02-20",
+          "SMALL_AREA": 0,
+          "COLLECT_AREA": "全国",
+          "MAIN_CATEGORY": {
+            "@code": "99",
+            "$": "その他"
+          },
+          "SUB_CATEGORY": {
+            "@code": "99",
+            "$": "その他"
+          },
+          "OVERALL_TOTAL_NUMBER": 550080,
+          "UPDATED_DATE": "2026-02-20",
+          "STATISTICS_NAME_SPEC": {
+            "TABULATION_CATEGORY": "都道府県データ",
+            "TABULATION_SUB_CATEGORY1": "基礎データ"
+          },
+          "TITLE_SPEC": {
+            "TABLE_NAME": "Ａ　人口・世帯"
+          }
+        },
+        {
+          "@id": "0000010102",
+          "STAT_NAME": {
+            "@code": "00200502",
+            "$": "社会・人口統計体系"
+          },
+          "GOV_ORG": {
+            "@code": "00200",
+            "$": "総務省"
+          },
+          "STATISTICS_NAME": "都道府県データ 基礎データ",
+          "TITLE": {
+            "@no": "0000010102",
+            "$": "Ｂ　自然環境"
+          },
+          "CYCLE": "年度次",
+          "SURVEY_DATE": 0,
+          "OPEN_DATE": "2026-02-20",
+          "SMALL_AREA": 0,
+          "COLLECT_AREA": "全国",
+          "MAIN_CATEGORY": {
+            "@code": "99",
+            "$": "その他"
+          },
+          "SUB_CATEGORY": {
+            "@code": "99",
+            "$": "その他"
+          },
+          "OVERALL_TOTAL_NUMBER": 66576,
+          "UPDATED_DATE": "2026-02-20",
+          "STATISTICS_NAME_SPEC": {
+            "TABULATION_CATEGORY": "都道府県データ",
+            "TABULATION_SUB_CATEGORY1": "基礎データ"
+          },
+          "DESCRIPTION": "",
+          "TITLE_SPEC": {
+            "TABLE_NAME": "Ｂ　自然環境"
+          }
+        }
+      ]
+    }
+  }
+}

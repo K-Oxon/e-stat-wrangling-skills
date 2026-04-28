@@ -1,0 +1,63 @@
+{
+  "GET_STATS_LIST": {
+    "RESULT": {
+      "STATUS": 0,
+      "ERROR_MSG": "正常に終了しました。",
+      "DATE": "2026-04-25T13:41:58.516+09:00"
+    },
+    "PARAMETER": {
+      "LANG": "J",
+      "STATS_CODE": "00200502",
+      "DATA_FORMAT": "J",
+      "LIMIT": 1
+    },
+    "DATALIST_INF": {
+      "NUMBER": 1,
+      "RESULT_INF": {
+        "FROM_NUMBER": 1,
+        "TO_NUMBER": 1
+      },
+      "TABLE_INF": {
+        "@id": "0000010101",
+        "STAT_NAME": {
+          "@code": "00200502",
+          "$": "社会・人口統計体系"
+        },
+        "GOV_ORG": {
+          "@code": "00200",
+          "$": "総務省"
+        },
+        "STATISTICS_NAME": "都道府県データ 基礎データ",
+        "TITLE": {
+          "@no": "0000010101",
+          "$": "Ａ　人口・世帯"
+        },
+        "CYCLE": "年度次",
+        "SURVEY_DATE": 0,
+        "OPEN_DATE": "2026-02-20",
+        "SMALL_AREA": 0,
+        "COLLECT_AREA": "都道府県",
+        "MAIN_CATEGORY": {
+          "@code": "99",
+          "$": "その他"
+        },
+        "SUB_CATEGORY": {
+          "@code": "99",
+          "$": "その他"
+        },
+        "OVERALL_TOTAL_NUMBER": 550080,
+        "UPDATED_DATE": "2026-02-20",
+        "STATISTICS_NAME_SPEC": {
+          "TABULATION_CATEGORY": "都道府県データ",
+          "TABULATION_SUB_CATEGORY1": "基礎データ"
+        },
+        "DESCRIPTION": {
+          "TABULATION_CATEGORY_EXPLANATION": "社会・人口統計体系の都道府県ごとに集計したデータを提供します。"
+        },
+        "TITLE_SPEC": {
+          "TABLE_NAME": "Ａ　人口・世帯"
+        }
+      }
+    }
+  }
+}

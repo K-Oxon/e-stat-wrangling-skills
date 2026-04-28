@@ -9,9 +9,14 @@ Use this skill to discover machine-readable e-Stat statistical tables.
 
 ## Workflow
 
-1. Read [reference.md](reference.md) for endpoint mapping.
-2. Use a saved-response recipe from `recipes/`.
-3. Confirm the `statsDataId` candidate before expanding into data retrieval work.
+1. Read [reference.md](reference.md) for endpoint behavior and response paths.
+2. Decide whether the user needs downloadable files or API/DB-provided statistical tables. If file URLs are the target, use `estat-file-search`.
+3. If the government statistics code is unknown, search the bundled government statistics code list with `scripts/gov_stats_lookup.py`.
+4. Generate a small set of plausible `searchWord` values before calling the API. Prefer survey names, administrative terms,制度名, and likely table-title nouns over casual wording.
+5. Search `getStatsList` with `scripts/list.py`, using `statsCode` and `searchWord` as the main levers.
+6. Save the raw JSON response before narrowing or summarizing.
+7. Inspect flattened candidates in e-Stat response order. Do not apply opaque scoring in the MVP.
+8. Stop at `statsDataId` discovery. Metadata inspection and full data fetching are follow-up workflows.
 
 ## Required environment
 
@@ -20,7 +25,14 @@ Use this skill to discover machine-readable e-Stat statistical tables.
 ## Scope
 
 - Find candidate tables
-- Inspect metadata
 - Prepare later data retrieval work
 
-Detailed API shaping is intentionally deferred.
+## Operating rules
+
+- Treat e-Stat API/DB search as a two-layer search space: government statistics code, then statistical table ID.
+- Use government statistics code discovery and keyword search iteratively.
+- `searchKind` is normally omitted; the API default is enough for this skill's table discovery workflow.
+- `statsNameList=Y` is not used in MVP because it changes the response from table candidates to survey-name lists.
+- `@id` is the `statsDataId`, but candidate output must include surrounding context because IDs can appear duplicated in unhelpful ways.
+- Date fields such as `UPDATED_DATE` are display metadata, not authoritative filters.
+- Prefer raw JSON plus CSV/JSONL candidate output over one-off `jq` pipelines for heavy responses.
