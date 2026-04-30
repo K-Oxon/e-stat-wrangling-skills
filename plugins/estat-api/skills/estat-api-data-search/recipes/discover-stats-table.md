@@ -3,7 +3,7 @@
 Prefer the script when the skill is installed from this repository:
 
 ```bash
-uv run --script plugins/estat-api-data-search/skills/estat-api-data-search/scripts/list.py \
+uv run --script plugins/estat-api/skills/estat-api-data-search/scripts/list.py \
   --stats-code 00200502 \
   --keyword "人口" \
   --limit 20 \

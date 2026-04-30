@@ -1,0 +1,40 @@
+name: tk46_010_001_layout
+description: |
+  地方公営企業決算状況調査 (水道事業) 調査票レイアウト
+  `samples/paper-excel-to-table/tk46-010-001/extracted.csv` 用の
+  sample schema。記入済み実データではなく、帳票レイアウト上の
+  入力欄・チェック欄・空欄を構造化した CSV を検証する。
+primary_key: [row_code, col_code]
+columns:
+  - name: row_code
+    type: str
+    required: true
+    description: 帳票上の「行」番号。2桁ゼロ埋め。
+  - name: col_code
+    type: str
+    required: true
+    description: 帳票上の「列番号」。括弧を除いた3桁ゼロ埋め。
+  - name: level
+    type: int
+    required: true
+    description: インデントや見出し階層から得た階層深さ。平坦なら0。
+  - name: section
+    type: str
+    required: false
+    description: 帳票上の大項目・区分。
+  - name: row_label
+    type: str
+    required: true
+    description: 行または欄の表示ラベル。
+  - name: unit
+    type: str
+    required: false
+    description: 単位。人、m3、千円など。
+  - name: value_type
+    type: str
+    required: true
+    description: input、check、blank など、欄の意味を示す分類。
+  - name: notes
+    type: str
+    required: false
+    description: 選択肢、注記、灰色セルなどの補足。

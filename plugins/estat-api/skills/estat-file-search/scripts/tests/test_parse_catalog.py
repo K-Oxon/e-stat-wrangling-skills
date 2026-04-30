@@ -75,3 +75,15 @@ def test_api_error_raises() -> None:
 
 def test_default_data_type_is_file_oriented() -> None:
     assert search.DEFAULT_DATA_TYPE == "XLS,CSV,PDF,XLS_REP"
+
+
+def test_missing_app_id_message_points_to_registration(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("ESTAT_APP_ID", raising=False)
+
+    with pytest.raises(SystemExit) as exc_info:
+        search.resolve_app_id(search.parse_args(["--keyword", "人口"]))
+
+    message = str(exc_info.value)
+    assert "ESTAT_APP_ID is required" in message
+    assert search.ESTAT_APP_ID_REGISTRATION_URL in message
+    assert "--app-id" in message

@@ -3,7 +3,7 @@
 After identifying the final URL from the saved catalog response, first do a dry run:
 
 ```bash
-uv run --script plugins/estat-file-search/skills/estat-file-search/scripts/download.py \
+uv run --script plugins/estat-api/skills/estat-file-search/scripts/download.py \
   --url "https://www.e-stat.go.jp/stat-search/file-download?statInfId=...&fileKind=0" \
   --resource-id 000000000000 \
   --format XLS \
@@ -14,7 +14,7 @@ uv run --script plugins/estat-file-search/skills/estat-file-search/scripts/downl
 Then download:
 
 ```bash
-uv run --script plugins/estat-file-search/skills/estat-file-search/scripts/download.py \
+uv run --script plugins/estat-api/skills/estat-file-search/scripts/download.py \
   --url "https://www.e-stat.go.jp/stat-search/file-download?statInfId=...&fileKind=0" \
   --resource-id 000000000000 \
   --format XLS \

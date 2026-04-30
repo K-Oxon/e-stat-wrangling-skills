@@ -1,7 +1,7 @@
 {
-  "name": "estat-file-search",
+  "name": "estat-api",
   "version": "0.1.0",
-  "description": "Search and download files from e-Stat using documentation-first recipes.",
+  "description": "Search e-Stat downloadable files and API/DB statistical tables.",
   "author": {
     "name": "K-Oxon",
     "url": "https://github.com/K-Oxon/e-stat-wrangling-skills"
@@ -9,12 +9,12 @@
   "homepage": "https://github.com/K-Oxon/e-stat-wrangling-skills",
   "repository": "https://github.com/K-Oxon/e-stat-wrangling-skills",
   "license": "MIT",
-  "keywords": ["estat", "search", "download", "statistics"],
+  "keywords": ["estat", "api", "search", "download", "statistics"],
   "skills": "./skills/",
   "interface": {
-    "displayName": "e-Stat File Search",
-    "shortDescription": "Find downloadable e-Stat files",
-    "longDescription": "Guide file-oriented e-Stat searches through reference documents and repeatable curl/xh recipes.",
+    "displayName": "e-Stat API",
+    "shortDescription": "Find e-Stat files and statistical table IDs",
+    "longDescription": "Guides e-Stat discovery through two skills: file-oriented getDataCatalog search for downloadable XLS, CSV, PDF, and browsing Excel resources; and API/DB-oriented getStatsList search for statsDataId candidates. Includes government statistics code lookup, keyword hints, raw response preservation, flattened candidate output, and selected file download.",
     "developerName": "K-Oxon",
     "category": "Coding",
     "capabilities": ["Interactive", "Read"],
@@ -22,7 +22,7 @@
     "privacyPolicyURL": "https://github.com/K-Oxon/e-stat-wrangling-skills",
     "termsOfServiceURL": "https://github.com/K-Oxon/e-stat-wrangling-skills",
     "defaultPrompt": [
-      "Search e-Stat for downloadable spreadsheet, CSV, or PDF files."
+      "Search e-Stat for downloadable files or API/DB statistical table IDs."
     ],
     "brandColor": "#2E8B57",
     "screenshots": []

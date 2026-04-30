@@ -21,6 +21,9 @@ Use this skill to discover machine-readable e-Stat statistical tables.
 ## Required environment
 
 - `ESTAT_APP_ID`
+  - Get one from <https://www.e-stat.go.jp/mypage/user/preregister>
+  - Set it with `export ESTAT_APP_ID="<your app id>"`, or pass `--app-id` for a one-off command.
+  - If you only need to parse a saved response, use `--from-fixture`; no app ID is needed.
 
 ## Scope
 

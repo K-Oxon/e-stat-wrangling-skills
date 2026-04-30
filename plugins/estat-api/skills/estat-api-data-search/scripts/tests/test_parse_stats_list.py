@@ -75,3 +75,15 @@ def test_api_error_raises() -> None:
 
     with pytest.raises(stats_list.EstatApiError):
         stats_list.parse_table_candidates([payload])
+
+
+def test_missing_app_id_message_points_to_registration(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("ESTAT_APP_ID", raising=False)
+
+    with pytest.raises(SystemExit) as exc_info:
+        stats_list.resolve_app_id(stats_list.parse_args(["--keyword", "人口"]))
+
+    message = str(exc_info.value)
+    assert "ESTAT_APP_ID is required" in message
+    assert stats_list.ESTAT_APP_ID_REGISTRATION_URL in message
+    assert "--app-id" in message

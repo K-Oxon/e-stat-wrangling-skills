@@ -4,7 +4,7 @@
 `statsCode`, then use keyword variants and inspect candidate titles/landing pages.
 
 ```bash
-uv run --script plugins/estat-file-search/skills/estat-file-search/scripts/search.py \
+uv run --script plugins/estat-api/skills/estat-file-search/scripts/search.py \
   --stats-code 00200521 \
   --keyword "東京 AND 人口" \
   --limit 100 \
@@ -15,7 +15,7 @@ uv run --script plugins/estat-file-search/skills/estat-file-search/scripts/searc
 If the response is too broad, try a short keyword set instead of one overloaded query:
 
 ```bash
-uv run --script plugins/estat-file-search/skills/estat-file-search/scripts/keyword_hints.py \
+uv run --script plugins/estat-api/skills/estat-file-search/scripts/keyword_hints.py \
   人口 東京 \
   --survey-name 国勢調査
 ```

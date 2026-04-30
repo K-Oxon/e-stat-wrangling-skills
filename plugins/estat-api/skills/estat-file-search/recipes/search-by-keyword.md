@@ -3,7 +3,7 @@
 Prefer the script when the skill is installed from this repository:
 
 ```bash
-uv run --script plugins/estat-file-search/skills/estat-file-search/scripts/search.py \
+uv run --script plugins/estat-api/skills/estat-file-search/scripts/search.py \
   --keyword "人口" \
   --limit 20 \
   --raw-output /tmp/estat-file-search.json \
