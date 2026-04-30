@@ -1,0 +1,24 @@
+{
+  "name": "e-stat-wrangling",
+  "owner": {
+    "name": "K-Oxon"
+  },
+  "metadata": {
+    "description": "Skills for taming Japanese public statistics data from e-Stat.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "paper-excel-to-table",
+      "source": "./plugins/paper-excel-to-table",
+      "version": "0.1.0",
+      "description": "Extract structured tables from poorly formatted paper-style Excel forms."
+    },
+    {
+      "name": "estat-api",
+      "source": "./plugins/estat-api",
+      "version": "0.1.0",
+      "description": "Search e-Stat downloadable files and API/DB statistical table IDs."
+    }
+  ]
+}
