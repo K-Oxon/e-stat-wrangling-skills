@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "lint:md": "markdownlint-cli2 && textlint README.md README.en.md CHANGELOG.md \"docs/**/*.md\" \"plugins/**/*.md\"",
+    "lint:md": "markdownlint-cli2 && textlint README.md CHANGELOG.md \"docs/**/*.md\" \"plugins/**/*.md\"",
     "lint:md:style": "markdownlint-cli2",
     "lint:md:text": "textlint",
     "hooks:install": "git config core.hooksPath .githooks",

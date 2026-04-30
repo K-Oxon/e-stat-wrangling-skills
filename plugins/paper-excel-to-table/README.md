@@ -2,18 +2,16 @@
 
 **紙様式 Excel を PDF 化したものから、Opus 4.7 の vision で構造化 CSV を取り出す Claude Code plugin。**
 
-[English version →](README.en.md) / [プロジェクト全体 →](../../README.md)
-
 ---
 
 ## この plugin は何をしてくれるか
 
-たとえば、水道事業業務年報のような **「セル結合だらけの紙様式 Excel」** を Claude Code に次のように頼めます。
+たとえば、地方公営企業決算状況調査の水道事業調査票レイアウトのような **「セル結合だらけの紙様式 Excel」** を Claude Code に次のように頼めます。
 
 ```
 この PDF を CSV 化して: /path/to/suido_nenpo.pdf
 
-これは◯◯市の水道事業業務年報 (2025 年度) のレイアウト。item_code は各行の
+これは地方公営企業決算状況調査の水道事業調査票レイアウト (2025 年度) のレイアウト。item_code は各行の
 右端にあり、インデントで親子関係を表現している。脚注は ※印。
 ```
 
@@ -39,7 +37,7 @@ subagent 経由で走らせるので **main セッションの文脈に画像バ
 | 入力 | **PDF のみ**。xlsx は利用者側で「ファイル → 名前を付けて保存 → PDF」しておく |
 | API キー | 不要 (Claude Code セッション内の Opus 4.7 が vision をやる) |
 
-xlsx → PDF を自動化しないのは、Excel/Numbers の「PDF として保存」経路が再現性で最も信頼できる / 代替 (LibreOffice headless 等) は崩れるケースが多い、という設計判断です ([詳細設計 §4.1](../../docs/dev/plugins/paper-excel-to-table.md))。
+xlsx → PDF を自動化しないのは、Excel/Numbers の「PDF として保存」経路が再現性で最も信頼できる / 代替 (LibreOffice headless 等) は崩れるケースが多い、という設計判断です。
 
 ---
 
@@ -110,7 +108,7 @@ subagent は最初に user_context を要求します。以下を先に伝える
 
 列定義が決まっている帳票を繰り返し処理する場合、YAML スキーマを渡すと Pydantic で validate されます。依頼時に `--schema <path>` のような指定でなく、自然言語でパスを伝えれば SKILL.md のワークフローが subagent prompt に組み込んでくれます。
 
-### サンプル: 水道事業業務年報用
+### サンプル: 地方公営企業決算状況調査の水道事業調査票レイアウト用
 
 同梱されている `scripts/schemas/suido_gyomu_nenpo.yaml` が最小例です。
 
@@ -174,31 +172,3 @@ uv run --script plugins/paper-excel-to-table/skills/paper-excel-to-table/scripts
 ```
 
 失敗時は stderr に「どの行のどの列がなぜ NG か」が行単位で列挙されます。
-
----
-
-## 落とし穴 (知っておくと事故りにくい)
-
-| 項目 | 対処 |
-| --- | --- |
-| インデント階層が CSV では消える | subagent は必ず `level` 列 (0 始まり整数) を付ける。スキーマでも `level: int, required: true` を強制 |
-| ID 列が右端にある帳票がそこそこある | 左→右を盲信しない。ID 列の side を subagent レポートの `id_column` で明示確認 |
-| 視覚的なセル結合 ≠ 論理的なセル結合 | 枠線の有無だけで判断しない。元帳票の意味論をユーザー側コンテキストで渡す |
-| 脚注 (※, 注1, `*`) | 値列に混ぜず `notes` 列に分離 |
-| 確信が無いセル | 空欄にせず `?` でフラグ。subagent レポートの `low_confidence` に出る |
-| Opus 4.7 の vision は入力 ~2576 px (長辺) に自動ダウンスケール | raw は 300 DPI で保存し、crop 後の部分画像で native 解像度を使う設計 |
-
----
-
-## 関連ドキュメント
-
-- [詳細設計 (design doc)](../../docs/dev/plugins/paper-excel-to-table.md) — なぜ subagent 構成か、backend contract、将来の package 化判断
-- [プロジェクト全体の README](../../README.md)
-- [SKILL.md](skills/paper-excel-to-table/SKILL.md) — Claude Code 向けのトリガー + ワークフロー (LLM が見る面)
-- [agents/paper-excel-extractor.md](agents/paper-excel-extractor.md) — subagent の入力契約と厳守ルール
-
----
-
-## ライセンス
-
-[MIT](../../LICENSE) — プロジェクト全体と同じ。
