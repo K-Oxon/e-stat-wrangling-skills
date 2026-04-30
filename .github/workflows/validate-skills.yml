@@ -1,0 +1,50 @@
+name: validate-skills
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - uses: astral-sh/setup-uv@v5
+      - name: Install markdown tooling
+        run: npm ci
+      - name: Check required skill files
+        run: |
+          test -f .claude-plugin/marketplace.json
+          test -f plugins/paper-excel-to-table/.claude-plugin/plugin.json
+          test -f plugins/paper-excel-to-table/skills/paper-excel-to-table/SKILL.md
+          test -f plugins/estat-api/.claude-plugin/plugin.json
+          test -f plugins/estat-api/skills/estat-file-search/SKILL.md
+          test -f plugins/estat-api/skills/estat-api-data-search/SKILL.md
+      - name: Validate plugin manifests
+        run: |
+          python -m json.tool .claude-plugin/marketplace.json >/dev/null
+          python -m json.tool plugins/paper-excel-to-table/.claude-plugin/plugin.json >/dev/null
+          python -m json.tool plugins/estat-api/.claude-plugin/plugin.json >/dev/null
+      - name: Lint Markdown
+        run: npm run lint:md
+      - name: Smoke test paper-excel scripts
+        run: |
+          uv run --script plugins/paper-excel-to-table/skills/paper-excel-to-table/scripts/rasterize.py --help
+          uv run --script plugins/paper-excel-to-table/skills/paper-excel-to-table/scripts/crop.py --help
+          uv run --script plugins/paper-excel-to-table/skills/paper-excel-to-table/scripts/schema.py dump-json-schema --schema plugins/paper-excel-to-table/skills/paper-excel-to-table/scripts/schemas/tk46_010_001_layout.yaml >/dev/null
+          uv run --script plugins/paper-excel-to-table/skills/paper-excel-to-table/scripts/schema.py validate samples/paper-excel-to-table/tk46-010-001/extracted.csv --schema plugins/paper-excel-to-table/skills/paper-excel-to-table/scripts/schemas/tk46_010_001_layout.yaml >/dev/null
+      - name: Smoke test e-Stat scripts
+        run: |
+          uv run --script plugins/estat-api/skills/estat-file-search/scripts/gov_stats_lookup.py --help
+          uv run --script plugins/estat-api/skills/estat-file-search/scripts/search.py --help
+          uv run --script plugins/estat-api/skills/estat-file-search/scripts/download.py --help
+          uv run --script plugins/estat-api/skills/estat-api-data-search/scripts/gov_stats_lookup.py --help
+          uv run --script plugins/estat-api/skills/estat-api-data-search/scripts/list.py --help
+      - name: Run e-Stat fixture tests
+        run: |
+          uv run --with pytest --with httpx --with pydantic --with typer pytest plugins/estat-api/skills/estat-file-search/scripts/tests
+          uv run --with pytest --with httpx --with pydantic --with typer pytest plugins/estat-api/skills/estat-api-data-search/scripts/tests
