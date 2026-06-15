@@ -25,19 +25,19 @@ curl -X 'GET' \
 
 ### APIパラメータ
 
-https://api.e-stat.go.jp/swagger-ui/e-statapi3.0.html#/%E7%B5%B1%E8%A8%88%E8%A1%A8%E6%83%85%E5%A0%B1%E5%8F%96%E5%BE%97/get-rest-json-statsList を参考にする
+[e-Stat API Swagger: getStatsList](https://api.e-stat.go.jp/swagger-ui/e-statapi3.0.html#/%E7%B5%B1%E8%A8%88%E8%A1%A8%E6%83%85%E5%A0%B1%E5%8F%96%E5%BE%97/get-rest-json-statsList) を参考にする
 
 | カテゴリ | パラメータ名 | 型 | 必須 | 内容・仕様 | 備考・Tips |
 | :--- | :--- | :---: | :---: | :--- | :--- |
-| **認証・基本** | **appId** | string | **○** | アプリケーションID |  |
+| **認証・基本** | **appId** | string | **○** | アプリケーションID | |
 | | **lang** | string | - | 取得言語（J：日本語 / E：英語） 省略時は「J」。Available: J, E | 基本全部省略でJでよい |
-| **時間軸** | **surveyYears** | string | - | 調査年月（yyyy / yyyymm / yyyymm-yyyymm）統計の対象となった期間で検索 | 中身が多種多様すぎるのでほぼ使わない  |
+| **時間軸** | **surveyYears** | string | - | 調査年月（yyyy / yyyymm / yyyymm-yyyymm）統計の対象となった期間で検索 | 中身が多種多様すぎるのでほぼ使わない |
 | | **openYears** | string | - | 公開年月（yyyy / yyyymm / yyyymm-yyyymm）データが公開された期間で検索 | 信用できない |
 | | **updatedDate** | string | - | 更新日付（yyyy / yyyymm / yyyymmdd / 範囲） 差分データのチェックに利用 | あまり信用できない |
 | **分類・地域** | **statsField** | string | - | 統計分野（2桁：大分類 / 4桁：小分類）例：「03」労働・賃金、「0201」人口 | 無視でよし |
-| | **statsCode** | string | - | 政府統計コード（5桁：作成機関 / 8桁：統計コード）  例：「00200521」国勢調査 | 重要  |
+| | **statsCode** | string | - | 政府統計コード（5桁：作成機関 / 8桁：統計コード）  例：「00200521」国勢調査 | 重要 |
 | | **collectArea** | string | - | 集計地域区分（1:全国 / 2:都道府県 / 3:市区町村） 検索データ種別=2（小地域）の場合は無効 | 無視でよし |
-| **検索種別** | **searchKind** | string | - | 検索データ種別（1:統計情報 / 2:小地域・メッシュ） 省略時は「1」。Available: 1, 2  | 無視でよし |
+| **検索種別** | **searchKind** | string | - | 検索データ種別（1:統計情報 / 2:小地域・メッシュ） 省略時は「1」。Available: 1, 2 | 無視でよし |
 | | **statsNameList** | string | - | 統計調査名一覧取得（Y：一覧を取得） Y指定時、統計表ではなく調査名一覧を出力 | 無視でよし (Yにはしない) |
 | | **searchWord** | string | - | 検索キーワード（AND, OR, NOT検索対応） 表題やメタ情報から文字列検索 | ここは初見で政府統計の特定ができてないときに政府統計を特定するために使う |
 | **取得制御** | **startPosition** | string | - | データ取得開始位置（1からの行番号） 継続取得時は前回の <NEXT_KEY> を指定 | 量が多い時はここでpagenation |
