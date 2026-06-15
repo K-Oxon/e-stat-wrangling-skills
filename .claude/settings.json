@@ -1,0 +1,6 @@
+{
+  "enabledPlugins": {
+    "paper-excel-to-table@e-stat-wrangling": true,
+    "estat-api@e-stat-wrangling": true
+  }
+}
