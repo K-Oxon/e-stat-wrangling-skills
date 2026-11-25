@@ -1,9 +1,11 @@
 # Download File
 
+In the examples below, set `SKILL_DIR` to the absolute path of this installed skill folder.
+
 After identifying the final URL from the saved catalog response, first do a dry run:
 
 ```bash
-uv run --script plugins/estat-api/skills/estat-file-search/scripts/download.py \
+uv run --script "$SKILL_DIR/scripts/download.py" \
   --url "https://www.e-stat.go.jp/stat-search/file-download?statInfId=...&fileKind=0" \
   --resource-id 000000000000 \
   --format XLS \
@@ -14,7 +16,7 @@ uv run --script plugins/estat-api/skills/estat-file-search/scripts/download.py \
 Then download:
 
 ```bash
-uv run --script plugins/estat-api/skills/estat-file-search/scripts/download.py \
+uv run --script "$SKILL_DIR/scripts/download.py" \
   --url "https://www.e-stat.go.jp/stat-search/file-download?statInfId=...&fileKind=0" \
   --resource-id 000000000000 \
   --format XLS \

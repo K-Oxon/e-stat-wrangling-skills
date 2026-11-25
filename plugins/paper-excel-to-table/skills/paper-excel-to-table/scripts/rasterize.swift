@@ -7,13 +7,10 @@
 //       [--alpha] [--no-annots] [--pages 1-|1,3,5|2-4,7]
 //   swift rasterize.swift --selftest
 //
-// Default --dpi is 300: A4 portrait renders at 2481x3508 px (~8.7 MP), above
-// Claude Opus 4.7's ~2576 px / ~3.75 MP vision input. The API downscales on
-// upload; we intentionally keep the raw PNG at max detail so the crop pipeline
-// (docs/dev/plugins/paper-excel-to-table.md §3) can cut logical blocks at
-// native resolution when per-page accuracy is insufficient.
+// At 300 DPI, A4 portrait renders at about 2481x3508 px. Full-page viewers
+// may downscale the image. Crops retain the original pixels for closer inspection.
 //
-// stdout: one JSON object (Backend contract, docs/dev/plugins/paper-excel-to-table.md §4.3).
+// stdout: one JSON object with the source PDF and rendered page metadata.
 // stderr: human-readable logs.
 
 #if !os(macOS)

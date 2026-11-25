@@ -8,9 +8,8 @@
 Renders a PDF to per-page PNGs by shelling out to the colocated Swift script.
 The Swift script owns the actual rasterization (PDFKit + Core Graphics); this
 wrapper just fail-fasts on non-Darwin hosts, checks that `swift` is available,
-redirects Swift's module cache to a writable location, and passes the Backend
-Contract stdout JSON (see docs/dev/plugins/paper-excel-to-table.md §4.3) back
-through to the caller verbatim.
+redirects Swift's module cache to a writable location, and passes the page
+metadata JSON back to the caller verbatim.
 """
 
 from __future__ import annotations

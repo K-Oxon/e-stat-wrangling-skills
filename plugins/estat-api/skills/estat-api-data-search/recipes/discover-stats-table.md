@@ -1,9 +1,9 @@
 # Discover Stats Table
 
-Prefer the script when the skill is installed from this repository:
+In the examples below, set `SKILL_DIR` to the absolute path of this installed skill folder.
 
 ```bash
-uv run --script plugins/estat-api/skills/estat-api-data-search/scripts/list.py \
+uv run --script "$SKILL_DIR/scripts/list.py" \
   --stats-code 00200502 \
   --keyword "人口" \
   --limit 20 \

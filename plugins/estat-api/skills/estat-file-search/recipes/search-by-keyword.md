@@ -1,9 +1,9 @@
 # Search By Keyword
 
-Prefer the script when the skill is installed from this repository:
+In the examples below, set `SKILL_DIR` to the absolute path of this installed skill folder.
 
 ```bash
-uv run --script plugins/estat-api/skills/estat-file-search/scripts/search.py \
+uv run --script "$SKILL_DIR/scripts/search.py" \
   --keyword "人口" \
   --limit 20 \
   --raw-output /tmp/estat-file-search.json \
