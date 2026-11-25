@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "26"
           cache: npm
       - uses: astral-sh/setup-uv@v5
       - name: Install markdown tooling
@@ -46,5 +46,5 @@ jobs:
           uv run --script plugins/estat-api/skills/estat-api-data-search/scripts/list.py --help
       - name: Run e-Stat fixture tests
         run: |
-          uv run --with pytest --with httpx --with pydantic --with typer pytest plugins/estat-api/skills/estat-file-search/scripts/tests
-          uv run --with pytest --with httpx --with pydantic --with typer pytest plugins/estat-api/skills/estat-api-data-search/scripts/tests
+          uv run --python 3.11 --with 'pytest>=9.2.0,<10' --with 'httpx>=0.28.1,<1' --with 'pydantic>=2.14.4,<3' pytest plugins/estat-api/skills/estat-file-search/scripts/tests
+          uv run --python 3.11 --with 'pytest>=9.2.0,<10' --with 'httpx>=0.28.1,<1' --with 'pydantic>=2.14.4,<3' pytest plugins/estat-api/skills/estat-api-data-search/scripts/tests

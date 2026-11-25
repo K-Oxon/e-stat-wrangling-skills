@@ -1,7 +1,7 @@
 #!/usr/bin/env -S uv run --script
 # /// script
 # requires-python = ">=3.12"
-# dependencies = ["typer>=0.12", "pillow>=10"]
+# dependencies = ["typer>=0.29.2,<1", "pillow>=13.0.0,<14"]
 # ///
 """crop.py — crop rectangular regions from a page PNG.
 

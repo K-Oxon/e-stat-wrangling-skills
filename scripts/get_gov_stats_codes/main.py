@@ -1,11 +1,11 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#   "pandas>=2,<3",
-#   "pandera[pandas]>=0.21,<0.27",
-#   "pdfplumber>=0.11,<0.12",
-#   "pydantic>=2,<3",
-#   "requests>=2,<3",
+#   "pandas>=3.1.1,<4",
+#   "pandera[pandas]>=0.36.0,<0.37",
+#   "pdfplumber>=0.11.11,<0.12",
+#   "pydantic>=2.14.4,<3",
+#   "requests>=2.34.2,<3",
 # ]
 # ///
 

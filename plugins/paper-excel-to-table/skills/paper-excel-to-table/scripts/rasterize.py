@@ -1,7 +1,7 @@
 #!/usr/bin/env -S uv run --script
 # /// script
 # requires-python = ">=3.12"
-# dependencies = ["typer>=0.12"]
+# dependencies = ["typer>=0.29.2,<1"]
 # ///
 """rasterize.py — thin Python wrapper around rasterize.swift.
 

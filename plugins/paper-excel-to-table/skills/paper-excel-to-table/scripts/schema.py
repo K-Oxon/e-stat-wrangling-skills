@@ -1,7 +1,7 @@
 #!/usr/bin/env -S uv run --script
 # /// script
 # requires-python = ">=3.12"
-# dependencies = ["typer>=0.12", "pydantic>=2.6", "pyyaml>=6"]
+# dependencies = ["typer>=0.29.2,<1", "pydantic>=2.14.4,<3", "pyyaml>=6.0.4,<7"]
 # ///
 """schema.py — YAML-defined Pydantic model + CSV validator for extractor output.
 
