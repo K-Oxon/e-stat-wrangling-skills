@@ -1,156 +1,77 @@
 # e-stat-wrangling-skills
 
-e-Statを本当に実務で使うためのAgent Skills
+[e-Stat (政府統計の総合窓口)](https://www.e-stat.go.jp/) の検索から、分析に使えるデータの取得・構造化までを支援する Agent Skills です。人口・自治体決算を調べたい人、統計を時系列で収集する研究者、e-Stat を一次情報源にするデータエンジニアを想定しています。
 
----
+| スキル | できること |
+| --- | --- |
+| [estat-file-search](plugins/estat-api/skills/estat-file-search/) | e-Stat の Excel・CSV・PDF などを検索し、確認したファイルをダウンロード |
+| [estat-api-data-search](plugins/estat-api/skills/estat-api-data-search/) | e-Stat API で提供される統計表を検索し、`statsDataId` を特定 |
+| [paper-excel-to-table](plugins/paper-excel-to-table/) | 紙様式の Excel を PDF に書き出した帳票やスキャンから、構造化 CSV を抽出 |
 
-## Why and What
+## インストール
 
-[e-Stat (政府統計の総合窓口)](https://www.e-stat.go.jp/) は日本の公的統計を扱うなら避けて通れない一方で、検索性と機械判読性はとにかく厳しい状況です。
+### Codex・Antigravity CLI
 
-このリポジトリはe-Statからデータを分析可能な状態にするまでの工数をできる限り減らすことを目的に、数々の知見を Claude Code セッションに直接 install できるように plugin の形でまとめたものです。
+GitHub にログイン済みの GitHub CLI で、利用する Git プロジェクトに3スキルをインストールできます。`gh skill` は GitHub CLI 2.105.0 で確認しました。両クライアントはプロジェクトの `.agents/skills/` を読み込みます。
 
-## こんな人に
-
-- 人口データや自治体決算などの行政データを分析したい人
-- 研究者・大学院生: 人口・経済統計を時系列で継続的に取りたい人
-- データエンジニア / データアナリスト: e-Stat を一次情報源にしてデータパイプラインを組みたい人
-
----
-
-## できること
-
-| Plugin | Skill | 何ができるか | Status |
-| --- | --- | --- | --- |
-| [`paper-excel-to-table`](plugins/paper-excel-to-table/) | [`paper-excel-to-table`](plugins/paper-excel-to-table/skills/paper-excel-to-table/) | 紙様式 Excel を PDF 化したものから、Opus 4.7 の vision で構造化 CSV を取り出す。低確度セルは自動トリミングで再観察 | Alpha (macOSのみ) |
-| [`estat-api`](plugins/estat-api/) | [`estat-file-search`](plugins/estat-api/skills/estat-file-search/) | e-Stat のファイル提供データ (xlsx/csv/pdf) を探索・ダウンロード | MVP |
-| [`estat-api`](plugins/estat-api/) | [`estat-api-data-search`](plugins/estat-api/skills/estat-api-data-search/) | e-Stat API/DB 提供の統計表を探索し、`statsDataId` を特定 | MVP |
-
----
-
-## Install
-
-```
-/plugin marketplace add K-Oxon/e-stat-wrangling-skills
-/plugin install paper-excel-to-table@e-stat-wrangling
-/plugin install estat-api@e-stat-wrangling
+```sh
+gh skill install K-Oxon/e-stat-wrangling-skills --all --agent codex --scope project
 ```
 
-Claude Code の使用が前提です。
+特定のリビジョンを使う場合は、コマンドに `--pin` と対象のフルコミット SHA を追加します。導入後にプロジェクトで新しいセッションを開始してください。
 
-### 初回 install 時の注意
+Node.js の環境では、Vercel の CLI も使えます。
 
-subagent を同梱する plugin (現状 `paper-excel-to-table`) は、**初回 install 直後に認識されないことがあります**。その場合は次を実行します。
-
-```
-/reload-plugins
+```sh
+npx skills add K-Oxon/e-stat-wrangling-skills --agent codex antigravity-cli --skill '*' --copy
 ```
 
-を 1 回実行してから試してください。
+### Claude Code
 
-### 推奨 permissions (任意)
-
-頻出の Bash 呼び出しで permission プロンプトを抑えたいときは、`~/.claude/settings.json` に次を追加すると快適です。
-
-```json
-{
-  "permissions": {
-    "allow": [
-      "Bash(uv run --script *)",
-      "Bash(swift --version)",
-      "Bash(xcode-select -p)",
-      "Bash(mdls -name kMDItemNumberOfPages *)"
-    ]
-  }
-}
-```
-
-あくまで自己責任で権限設定はお願いします。
-
----
-
-## ユースケース — 紙帳票 PDF から CSV を取り出す
-
-`paper-excel-to-table` は最も「痛みに効く」plugin です。
-公営企業決算状況調査の調査票のような **印刷前提の紙様式 Excel** を構造化したcsvに抽出します。従来のLLMでは意味推論が難しかった部分もClaude Opus 4.7の高画質対応と高推論モードを使うことでかなり精度高く構造化可能です。
-（現在はAlpha版 MacOS * Claude codeの環境のみ）
-
-### 1. xlsx を PDF に変換 (利用者側の作業)
-
-Excel / Numbers / LibreOffice のいずれかで開いて「**ファイル → 名前を付けて保存 → PDF**」。xlsx PDFの直接変換はこのskillsの対象外です。
-
-### 2. Claude Code セッションで依頼
-
-```
-この PDF を CSV 化して: /path/to/your.pdf
-
-これは地方財政決算状況調査の水道事業の調査票レイアウト (2025 年度)。列番号が各行の右端にあり、インデントで親子関係を表現している。
-```
-
-`paper-excel-to-table` の SKILL.md が自動で発火し、Opus 4.7 の subagent が次を実行します。
-
-1. PDF を高解像度 PNG にラスタライズ (300 DPI, macOS PDFKit 経由)
-2. ページ全体を観察し、抽出プラン (列位置・ID 列の側・階層表現) を策定
-3. 初回抽出 → 低確度セルを検出 → 該当領域を自動でトリミングして native 解像度で再観察 → CSV に上書き
-4. (オプション) YAML スキーマがあれば Pydantic で validate
-5. 「何行抽出した / 低確度セルはどこ / ID 列は左右どちらだったか」の短いレポートを返す
-
-確信が持てなかったセルは空欄ではなく`?`でマークされます。重要な分析の前には、必ず元 PDF と突き合わせてください。
-
-## ユースケース — e-Stat APIでe-Statから統計データを自然言語で検索
-
-自然言語でe-Statに登録されている統計データを検索できます。
-ファイルとAPI提供データ、どちらも検索対象です。
-
-※ e-Stat APIの利用が前提になります。skillの利用までに環境変数などで以下をsetしておいてください。
-`ESTAT_APP_ID` は <https://www.e-stat.go.jp/mypage/user/preregister> から取得できます。
-
-```
-export ESTAT_APP_ID=[YOUR KEY]
-```
-
-### 検索例
+Claude Code では同梱プラグインをインストールできます。帳票抽出は専用の Opus 4.7 サブエージェントを使います。
 
 ```text
-政府統計:地方財政状況調査の中から地方公営企業決算状況調査の水道の調査票を探して
-最新年がいつかも知りたい
+/plugin marketplace add K-Oxon/e-stat-wrangling-skills
+/plugin install estat-api@e-stat-wrangling
+/plugin install paper-excel-to-table@e-stat-wrangling
 ```
 
----
+初回インストール直後に帳票のサブエージェントが見つからないときは、`/reload-plugins` を実行します。セッションで選んだモデルを使う場合は、Claude プラグインが有効になっていないプロジェクトで、`gh skill install` の `--agent claude-code` を使ってスキルを導入します。
 
-## 前提と制約
+## 使い方
 
-| 項目 | 現状 |
-| --- | --- |
-| 対応 OS | macOS のみ (PDF ラスタライズに PDFKit を使うため) |
-| xlsx → PDF 変換 | 利用者が事前に手動で実施。skill では自動化していない |
-| API キー | e-Stat 系: `ESTAT_APP_ID` 必須 / paper-excel-to-table: 不要 (Claude Code セッション内で完結) |
-| Claude Code バージョン | 0.124.0 以降で動作確認 |
-| 精度 | vision LLM の出力につき不確実性あり。`?` マーク運用で保険 |
+### e-Stat を検索する
 
----
+ライブ検索には e-Stat のアプリケーション ID が必要です。[e-Stat のユーザー登録画面](https://www.e-stat.go.jp/mypage/user/preregister)から取得し、セッションの環境変数 `ESTAT_APP_ID` に設定します。
+
+```text
+地方公営企業決算状況調査の水道事業の調査票を探して。最新年も知りたい。
+```
+
+詳しい使い方は [estat-api](plugins/estat-api/) を参照してください。
+
+### 帳票 PDF を CSV にする
+
+Excel・Numbers・LibreOffice のいずれかで帳票を PDF に書き出し、対象ページと、分かっている帳票の用途や項目を伝えます。macOS、Xcode Command Line Tools、`uv`、画像を確認できるエージェントが必要です。
+
+```text
+このPDFの1ページ目をCSVにして。地方公営企業決算状況調査の水道事業の調査票です。
+「行」と「列番号」の組で項目を識別します。出力は result.csv にしてください。
+```
+
+公開帳票2ケースの比較では、Claude Opus 5.5、GPT-6.2 Astra、Gemini 4 Neon がいずれも Opus 4.7 以上の構造化品質でした。
+
+抽出手順と YAML スキーマによる検証は [paper-excel-to-table](plugins/paper-excel-to-table/)、モデル別の品質と再現手順は [紙帳票の構造化品質評価](docs/paper-excel-evaluation.md) を参照してください。
+
+## 開発
+
+```sh
+npm ci
+npm run lint:md
+```
+
+ステージした Markdown をコミット前に検査するには `npm run hooks:install` を実行します。解除は `npm run hooks:uninstall` です。
 
 ## ライセンス
 
 [MIT](LICENSE)
-
-## for Developer
-
-lint:
-
-```shell
-npm install
-npm run lint:md
-```
-
-If you want to check only staged Markdown before committing, please enable local hooks.
-
-```shell
-npm run hooks:install
-```
-
-To disable, follow the steps below:
-
-```shell
-npm run hooks:uninstall
-```

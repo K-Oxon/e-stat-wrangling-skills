@@ -1,16 +1,16 @@
 # Architecture
 
-This repository uses a plugin-first structure.
+Each skill directory is the source for standalone Agent Skills and for the Claude Code plugins.
 
 - `plugins/` contains skill-facing workflow descriptions, references, recipes, scripts, and subagents.
 - `samples/` contains public sample inputs, context, and representative outputs.
-- `docs/dev/` contains design notes, planning records, and temporary investigation artifacts.
+- `docs/` contains architecture, skill maintenance notes, and evaluation results.
 - `scripts/` contains repository-level maintenance or source data refresh helpers.
 - `packages/` is intentionally absent until a workflow needs reusable implementation code.
 
 ## Current Plugins
 
-- `paper-excel-to-table` is a Claude Code subagent workflow with local helper scripts.
+- `paper-excel-to-table` has a shared extraction procedure and local helper scripts. The Claude Code plugin supplies a dedicated subagent.
 - `estat-api` contains e-Stat API discovery skills:
   - `estat-file-search` is a PEP 723 script workflow for `getDataCatalog` discovery and file download.
   - `estat-api-data-search` is a PEP 723 script workflow for `getStatsList` table discovery.
@@ -22,13 +22,12 @@ This repository uses a plugin-first structure.
 - Add PEP 723 scripts when repeatable output, raw evidence capture, or fixture tests matter.
 - Save raw e-Stat responses before shaping them.
 - Keep fixture-first tests so CI can stay mostly offline.
-- v1 targets Claude Code plugin marketplace usage.
-- Other install surfaces are future work until they are tested and cheap to maintain.
+- Standalone installs for Codex and Antigravity CLI share the project skill directory. The Claude Code marketplace loads the same skills.
 
 ## Data Boundaries
 
 - `samples/` is for public examples that users can follow.
 - `scripts/tests/fixtures/` is for small deterministic test data.
-- `docs/dev/` is for design and investigation artifacts, not the public happy path.
+- `samples/paper-excel-to-table/` contains the source-checked evaluation fixtures outside the distributed skills.
 
 When package code becomes necessary, introduce it as a separate decision with a clear owner workflow, tests, and CLI surface.

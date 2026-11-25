@@ -28,7 +28,7 @@ uv run --script "$SKILL_DIR/scripts/rasterize.py" "$PDF" "$WORKDIR" --dpi 300 --
    ```
 
    原点は左上。比率指定 `--rel-box` とピクセル指定 `--box` は別の呼び出しにする。同じ形式の矩形と `-o` を繰り返せば複数の裁断をまとめられる。裁断の呼び出しは1回の抽出につき最大6回。残った未読セルは `?` のまま報告する。
-4. YAML が指定されていれば `uv run --script "$SKILL_DIR/scripts/schema.py" validate "$CSV" --schema "$SCHEMA"` を実行する。エラーに対応する箇所を再観察し、最大3回再検証する。スキーマの `allow_unknown` は `?` の扱いを指定する。
+4. YAML が指定されていれば `uv run --script "$SKILL_DIR/scripts/schema.py" validate "$CSV" --schema "$SCHEMA"` を単独のシェル呼び出しで実行する。エラーに対応する箇所を再観察し、最大3回再検証する。スキーマの `allow_unknown` は `?` の扱いを指定する。
 5. `csv_path`、`rows`、`id_column` と元画像上の位置、`hierarchy_signal`、`crops_used`、`low_confidence`、`schema_validation`、`notes_for_user` を報告する。
 
 抽出中の書き込み先は出力 CSV と `workdir` 内の `crop-*.png` に限る。上限に達した場合は、残りの問題を明記して途中結果を渡す。

@@ -1,6 +1,6 @@
 # estat-api
 
-Claude Code plugin for searching e-Stat downloadable files and API/DB statistical tables.
+Agent Skills for searching e-Stat downloadable files and API/DB statistical tables.
 
 This plugin contains two skills:
 
@@ -27,10 +27,7 @@ For one-off commands, pass `--app-id "..."` instead. Fixture parsing with `--fro
 
 ## Install
 
-```text
-/plugin marketplace add K-Oxon/e-stat-wrangling-skills
-/plugin install estat-api@e-stat-wrangling
-```
+See the [installation instructions](../../README.md#インストール) for Codex, Antigravity CLI, and Claude Code. The CLI examples below are run from the root of this repository. In an installed skill, the recipes locate scripts relative to the skill directory.
 
 ## File Search Workflow
 

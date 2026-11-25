@@ -1,6 +1,7 @@
 ---
 name: estat-file-search
 description: Find and download e-Stat files such as Excel, CSV, or PDF. Use for e-Stat dataset or survey-file discovery (政府統計ファイルの検索・ダウンロード).
+license: MIT
 compatibility: Requires uv and Python 3.11+. Live search needs network access and ESTAT_APP_ID.
 ---
 

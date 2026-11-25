@@ -1,6 +1,6 @@
 {
   "name": "estat-api",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Search e-Stat downloadable files and API/DB statistical tables.",
   "author": {
     "name": "K-Oxon",

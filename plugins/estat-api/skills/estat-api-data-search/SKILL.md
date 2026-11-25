@@ -1,6 +1,7 @@
 ---
 name: estat-api-data-search
 description: Discover e-Stat API/DB statistical tables and identify statsDataId (統計表ID・e-Stat APIで使えるデータの検索). Use when locating tables for API retrieval.
+license: MIT
 compatibility: Requires uv and Python 3.11+. Live search needs network access and ESTAT_APP_ID.
 ---
 
