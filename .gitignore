@@ -1,6 +1,8 @@
 # Project: scratch / generated outputs
 tmp/
 
+.env.op
+
 # Created by https://www.toptal.com/developers/gitignore/api/macos,visualstudiocode,linux,windows,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,visualstudiocode,linux,windows,python
 

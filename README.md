@@ -12,15 +12,13 @@
 
 ### Codex・Antigravity CLI
 
-GitHub にログイン済みの GitHub CLI で、利用する Git プロジェクトに3スキルをインストールできます。`gh skill` は GitHub CLI 2.105.0 で確認しました。両クライアントはプロジェクトの `.agents/skills/` を読み込みます。
+`gh skill` コマンドで、Codex エージェントにスキルを導入できます。
 
 ```sh
 gh skill install K-Oxon/e-stat-wrangling-skills --all --agent codex --scope project
 ```
 
-特定のリビジョンを使う場合は、コマンドに `--pin` と対象のフルコミット SHA を追加します。導入後にプロジェクトで新しいセッションを開始してください。
-
-Node.js の環境では、Vercel の CLI も使えます。
+`npx skills` コマンドの場合。
 
 ```sh
 npx skills add K-Oxon/e-stat-wrangling-skills --agent codex antigravity-cli --skill '*' --copy
@@ -69,8 +67,6 @@ Excel・Numbers・LibreOffice のいずれかで帳票を PDF に書き出し、
 npm ci
 npm run lint:md
 ```
-
-ステージした Markdown をコミット前に検査するには `npm run hooks:install` を実行します。解除は `npm run hooks:uninstall` です。
 
 ## ライセンス
 
