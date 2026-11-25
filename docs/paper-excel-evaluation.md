@@ -25,6 +25,20 @@ uv run --script "$eval_script" compare --case page-01 \
 
 6ページ目は `--case page-06` で繰り返す。比較結果はケースごとの3指標の中央値を示す。すべての中央値が基準以上なら `at_least_baseline`、下回る指標があれば `below_baseline`、採点可能な試行が不足すれば `unverified`。試行ごとにモデルのID、CLIのバージョン、推論設定と採点結果を記録する。
 
+### 保存済みの基準を使う
+
+同じ帳票と採点基準で新しいモデルを試すときは、Opus 4.7 の保存済みの試行を基準に使える。リポジトリのルートで、比較したいケースの3試行を取り出す。
+
+```sh
+report=samples/paper-excel-to-table/tk46-010-001/evaluation/results-2026-11-25.json
+case_id=page-01
+for trial in 1 2 3; do
+  jq --arg case_id "$case_id" --argjson trial "$trial" \
+    '.trials[] | select(.execution == "baseline" and .case == $case_id and .attempt == $trial)' \
+    "$report" > "baseline-$trial.json"
+done
+```
+
 ### クライアント別の実行例
 
 `prepare` の後、作業ディレクトリに移動して実行する。下の `repo` はこのリポジトリの絶対パス。エージェントが `uv` を実行できることを事前に確認する。ネットワークを制限したセッションでは、ラスタライズ・裁断・スキーマ検証の依存を先に取得しておく。

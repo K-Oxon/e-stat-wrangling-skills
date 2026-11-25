@@ -1,8 +1,6 @@
 ---
 name: paper-excel-extractor
 description: Extract a structured CSV from rasterized paper-style forms and recheck low-confidence regions. Use when paper-excel-to-table provides paths to page images and an output CSV.
-model: claude-opus-4-7
-effort: high
 tools: Read, Bash, Write
 ---
 

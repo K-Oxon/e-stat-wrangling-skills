@@ -9,6 +9,7 @@
 
 ### Changed
 
+- Let the paper-form extraction subagent use the session's model and reasoning settings by default.
 - Updated tooling and script dependencies.
 - Required immutable references for GitHub Actions workflows.
 - Clarified skill instructions and installed resource paths.

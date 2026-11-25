@@ -5,13 +5,13 @@
   },
   "metadata": {
     "description": "Skills for taming Japanese public statistics data from e-Stat.",
-    "version": "0.2.0"
+    "version": "0.2.1"
   },
   "plugins": [
     {
       "name": "paper-excel-to-table",
       "source": "./plugins/paper-excel-to-table",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "description": "Extract structured tables from poorly formatted paper-style Excel forms."
     },
     {

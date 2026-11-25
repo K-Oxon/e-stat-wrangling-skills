@@ -28,7 +28,7 @@ npx skills add K-Oxon/e-stat-wrangling-skills --agent codex antigravity-cli --sk
 
 ### Claude Code
 
-Claude Code では同梱プラグインをインストールできます。帳票抽出は専用の Opus 4.7 サブエージェントを使います。
+Claude Code では同梱プラグインをインストールできます。帳票抽出には、通常は親セッションのモデルを継承する専用サブエージェントを使います。
 
 ```text
 /plugin marketplace add K-Oxon/e-stat-wrangling-skills
@@ -36,7 +36,7 @@ Claude Code では同梱プラグインをインストールできます。帳�
 /plugin install paper-excel-to-table@e-stat-wrangling
 ```
 
-初回インストール直後に帳票のサブエージェントが見つからないときは、`/reload-plugins` を実行します。セッションで選んだモデルを使う場合は、Claude プラグインが有効になっていないプロジェクトで、`gh skill install` の `--agent claude-code` を使ってスキルを導入します。
+初回インストール直後に帳票のサブエージェントが見つからないときは、`/reload-plugins` を実行します。スキル単体を導入する場合は、`gh skill install` の `--agent claude-code` を使えます。
 
 ## 使い方
 
@@ -52,7 +52,7 @@ Claude Code では同梱プラグインをインストールできます。帳�
 
 ### 帳票 PDF を CSV にする
 
-Excel・Numbers・LibreOffice のいずれかで帳票を PDF に書き出し、対象ページと、分かっている帳票の用途や項目を伝えます。macOS、Xcode Command Line Tools、`uv`、画像を確認できるエージェントが必要です。
+Excel・Numbers・LibreOffice のいずれかで帳票を PDF に書き出し、対象ページと、分かっている帳票の用途や項目を伝えます。macOS、Xcode Command Line Tools、`uv`、画像を確認できるエージェントが必要です。複雑な帳票には、画像入力に対応したフロンティアモデルを推奨します。
 
 ```text
 このPDFの1ページ目をCSVにして。地方公営企業決算状況調査の水道事業の調査票です。
