@@ -1,0 +1,32 @@
+name: waterworks_form_evaluation
+description: Structure of the printed form. Preserve two-digit row codes and three-digit column codes.
+primary_key: [row_code, col_code]
+columns:
+  - name: row_code
+    type: str
+    required: true
+  - name: col_code
+    type: str
+    required: true
+  - name: level
+    type: int
+    required: true
+  - name: section
+    type: str
+    description: Printed parent labels, from outer to inner, separated by a slash.
+  - name: row_label
+    type: str
+    description: Leaf label on the form. May be empty for a row with no printed leaf label.
+  - name: column_label
+    type: str
+    description: Printed leaf column heading when columns are organized as separate vertical fields.
+  - name: unit
+    type: str
+    description: Unit on the form, including a shared heading or ditto unit, if present.
+  - name: value_type
+    type: str
+    required: true
+    description: input (entry field), check (formula check or marked choices), or blank (blocked gray field).
+  - name: notes
+    type: str
+    description: Meaningful printed footnotes, options, and field-specific annotations.

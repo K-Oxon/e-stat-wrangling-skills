@@ -35,6 +35,8 @@ jobs:
           python -m json.tool plugins/estat-api/.claude-plugin/plugin.json >/dev/null
       - name: Lint Markdown
         run: npm run lint:md
+      - name: Test paper-excel evaluation
+        run: uv run --python 3.11 python -m unittest scripts.tests.test_evaluate_paper_excel
       - name: Smoke test paper-excel scripts
         run: |
           uv run --script plugins/paper-excel-to-table/skills/paper-excel-to-table/scripts/rasterize.py --help
